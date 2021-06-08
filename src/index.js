@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App name="Beer App" creator="James V Messina" year="Created 2021"/>
   </React.StrictMode>,
   document.getElementById('root')
 );
