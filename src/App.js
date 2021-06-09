@@ -11,26 +11,29 @@ class App extends Component {
     super(props)
 
     this.state = {
-      beerList: []
+      beerList: [],
     }
-
   }
 
   componentDidMount(){
-    axios.get('https://api.punkapi.com/v2/beers')
-    .then(res => {
-    const beerList = res.data
-    this.setState({ beerList: beerList }) 
-  })
+      axios.get('https://api.punkapi.com/v2/beers')
+      .then(res => {
+      const beerList = res.data
+      this.setState({ beerList: beerList }) 
+    })
   }
 
-  render(){
-    console.log('test'); 
+  handleLike = (index, name) =>{
+    console.log('this beer ' + name + ' at index ' + index + ' was liked!')
+    
+  }
+
+  render(){ 
     return (
       <div className="App">
       <header className="App-header">
       <ol>{this.state.beerList.map((beer, index) => {
-        return <BeerCard key={index} name={beer.name} image={beer.image_url} first_brewed={beer.first_brewed} tagline={beer.tagline} abv={beer.abv} description={beer.description}/>
+        return <BeerCard key={index} index={index} beerWasLiked={this.handleLike} name={beer.name} image={beer.image_url} first_brewed={beer.first_brewed} tagline={beer.tagline} abv={beer.abv} description={beer.description}/>
       })}</ol>
       <p>{this.props.name}</p>
       <p>{this.props.creator}</p>
