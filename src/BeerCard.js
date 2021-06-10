@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useState } from 'react'; 
 
 const firstBrewedDate = {
     color: "yellow",
@@ -26,14 +26,29 @@ const descriptionStyle = {
 }
 
 function BeerCard(props){
-    const { name, first_brewed, tagline, image, abv, description, beerWasLiked, index } = props; 
+    const { name, first_brewed, tagline, image, abv, description, beerWasLiked, index, ibu, malts, barley, yeast } = props; 
+    const [isHidden, setHide] = useState(true); 
+
     return(
         <li style={{listStyle: "none"}}>
             <h2>{name}<span style={ firstBrewedDate }>{first_brewed}</span></h2>
+            <button onClick={() => {isHidden ? setHide(false) : setHide(true)}}>{isHidden ? "Show Details" : "Hide Details"}</button>
             <h3 style={ taglineStyle }>{tagline}</h3>
-            <img style={{height: "200px"}}src={image} alt="beer bottle pic"></img>
-            <p style={ AbvStyle }>ABV: {abv} % <span style={ descriptionStyle }>{description}</span></p>
-            <button onClick ={() => {beerWasLiked(index, name)}}>💗Like </button>
+            <img 
+                style={{height: "200px"}}
+                src={image} alt='beer pic'>
+            </img>
+            {isHidden ?
+                <div></div> :
+                    <div>
+                        <p>Malts: {malts}</p>
+                        <p>Yeast: {yeast}</p>
+                        <p>Barley: {barley}</p>
+                        <p>IBU: {ibu}</p>
+                        <p style={ AbvStyle }>ABV: {abv} % <span style={ descriptionStyle }>{description}</span></p>
+                        <button onClick ={() => {beerWasLiked(index, name)}}>💗Like</button>
+                    </div>
+            }
         </li>
     )
 }
