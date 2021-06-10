@@ -26,8 +26,11 @@ const descriptionStyle = {
 }
 
 function BeerCard(props){
-    const { name, first_brewed, tagline, image, abv, description, beerWasLiked, index, ibu, malts, barley, yeast } = props; 
-    const [isHidden, setHide] = useState(true); 
+    const { name, first_brewed, tagline, image, abv, description, ibu, malts, barley, yeast} = props; 
+    const [isHidden, setHide] = useState(true);  
+    const [count, setCount] = useState(0); 
+
+    
 
     return(
         <li style={{listStyle: "none"}}>
@@ -46,7 +49,7 @@ function BeerCard(props){
                         <p>Barley: {barley}</p>
                         <p>IBU: {ibu}</p>
                         <p style={ AbvStyle }>ABV: {abv} % <span style={ descriptionStyle }>{description}</span></p>
-                        <button onClick ={() => {beerWasLiked(index, name)}}>💗Like</button>
+                        <button onClick={() => setCount(count + 1)}>💗Likes: {count}</button>
                     </div>
             }
         </li>
