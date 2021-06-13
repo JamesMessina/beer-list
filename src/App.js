@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import './App.css';
 
-import BeerCard from './BeerCard'
+import ListBeers from './ListBeers';
 
 
 class App extends Component {
@@ -11,7 +11,8 @@ class App extends Component {
     super(props)
 
     this.state = {
-      beerList: []
+      beerList: [],
+      searchTerm: ""
     }
   }
 
@@ -23,22 +24,34 @@ class App extends Component {
     })
   }
 
-  handleLike = (index, name) =>{
-    console.log('this beer ' + name + ' at index ' + index + ' was liked!')
-    
+  handleChange = (e) =>{
+    this.setState({
+     [e.target.name]: e.target.value
+    })
   }
 
+  filterSearch(term){
+    return(item) => {
+      return (
+        item.name.toLowerCase().includes(term.toLowerCase())
+      )
+    }
+  }
   
   render(){ 
     return (
       <div className="App">
       <header className="App-header">
-      <ol>{this.state.beerList.map((beer, index) => {
-        return <BeerCard key={index} index={index} yeast={beer.ingredients.yeast} ibu={beer.ibu} beerWasLiked={this.handleLike} name={beer.name} image={beer.image_url} first_brewed={beer.first_brewed} tagline={beer.tagline} abv={beer.abv} description={beer.description}/>
-      })}</ol>
-      <p>{this.props.name}</p>
-      <p>{this.props.creator}</p>
-      <p>{this.props.year}</p>
+        <form>
+          <label>Search:</label>
+          <input name="searchTerm" type="text" placeholder="search beer" value={this.state.searchTerm} onChange={(e) => {this.handleChange(e)}}>
+          </input>
+        </form>
+        {
+        !this.state.searchTerm ?
+          <ListBeers beers={this.state.beerList}/> :
+          <ListBeers beers={this.state.beerList.filter(this.filterSearch(this.state.searchTerm))}/>
+        }
       </header>
       </div>
     );
