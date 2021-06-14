@@ -12,7 +12,8 @@ class App extends Component {
 
     this.state = {
       beerList: [],
-      searchTerm: ""
+      searchTerm: "",
+      isClicked: false
     }
   }
 
@@ -30,7 +31,20 @@ class App extends Component {
     })
   }
 
-  filterSearch(term){
+  handleClick = () =>{
+    if(this.state.isClicked){
+      this.setState({isClicked: false}); 
+    }else{
+      this.setState({isClicked: true}); 
+    }
+  }
+
+  handleClear = () =>{
+    this.setState({searchTerm: ""}); 
+    this.setState({isClicked: false})
+  }
+
+  filterSearch = (term) =>{
     return(item) => {
       return (
         item.name.toLowerCase().includes(term.toLowerCase())
@@ -44,11 +58,12 @@ class App extends Component {
       <header className="App-header">
         <form>
           <label>Search:</label>
-          <input name="searchTerm" type="text" placeholder="search beer" value={this.state.searchTerm} onChange={(e) => {this.handleChange(e)}}>
-          </input>
+          <input name="searchTerm" type="text" placeholder="search beer" value={this.state.searchTerm} onChange={(e) => {this.handleChange(e)}}></input>
         </form>
+        <button onClick={this.handleClick}>Search</button>
+        <button onClick={this.handleClear}>Clear</button>
         {
-        !this.state.searchTerm ?
+        !this.state.isClicked ?
           <ListBeers beers={this.state.beerList}/> :
           <ListBeers beers={this.state.beerList.filter(this.filterSearch(this.state.searchTerm))}/>
         }

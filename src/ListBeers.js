@@ -11,12 +11,19 @@ function ListBeers(props){
                     key={index} 
                     index={index} 
                     yeast={beer.ingredients.yeast} 
-                    ibu={beer.ibu} name={beer.name} 
+                    ibu={beer.ibu} 
+                    name={beer.name} 
                     image={beer.image_url} 
                     first_brewed={beer.first_brewed} 
                     tagline={beer.tagline} 
                     abv={beer.abv} 
-                    description={beer.description}/>
+                    description={beer.description}
+                    malts={beer.ingredients.malt.map((maltItem) =>{
+                        return maltItem.name.concat(' ').concat(', ');
+                    })}
+                    hops={beer.ingredients.hops.map((hop, index) =>{
+                        return hop.name.concat(' ').concat(', ');
+                    })}/>
                 )
             })}
         </ol>
