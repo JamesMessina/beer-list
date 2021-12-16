@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; 
 import axios from 'axios';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './App.css';
 
 import ListBeers from './ListBeers';
@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       beerList: [],
       searchTerm: "",
-      isClicked: false
+      isClicked: false,
+      isLoading: true
     }
   }
 
@@ -22,6 +23,8 @@ class App extends Component {
       .then(res => {
       const beerList = res.data
       this.setState({ beerList: beerList }) 
+      this.setState({isLoading: false})
+      console.log("loaded", this.state.beerList)
     })
   }
 
@@ -55,22 +58,22 @@ class App extends Component {
   render(){ 
     return (
       <div className="App">
-      <header className="App-header">
-        <form>
-          <label>Search:</label>
-          <input name="searchTerm" type="text" placeholder="search beer" value={this.state.searchTerm} onChange={(e) => {this.handleChange(e)}}></input>
-        </form>
-        <br></br>
-        <div style={{width: "300px", display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
-          <button onClick={this.handleClick}>Search</button>
-          <button onClick={this.handleClear}>Clear</button>
-        </div>
-        {
-        !this.state.isClicked ?
-          <ListBeers beers={this.state.beerList}/> :
-          <ListBeers beers={this.state.beerList.filter(this.filterSearch(this.state.searchTerm))}/>
-        }
-      </header>
+        <header className="App-header">
+          <form>
+            <label>Search:</label>
+            <input name="searchTerm" type="text" placeholder="search beer" value={this.state.searchTerm} onChange={(e) => {this.handleChange(e)}}></input>
+          </form>
+          <br></br>
+          <div style={{width: "300px", display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
+            <button onClick={this.handleClick}>Search</button>
+            <button onClick={this.handleClear}>Clear</button>
+          </div>
+          {
+          !this.state.isClicked ?
+            <ListBeers beers={this.state.beerList}/> :
+            <ListBeers beers={this.state.beerList.filter(this.filterSearch(this.state.searchTerm))}/>
+          }
+        </header>
       </div>
     );
   }
