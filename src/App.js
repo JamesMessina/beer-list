@@ -60,8 +60,11 @@ class App extends Component {
           <label>Search:</label>
           <input name="searchTerm" type="text" placeholder="search beer" value={this.state.searchTerm} onChange={(e) => {this.handleChange(e)}}></input>
         </form>
-        <button onClick={this.handleClick}>Search</button>
-        <button onClick={this.handleClear}>Clear</button>
+        <br></br>
+        <div style={{width: "300px", display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
+          <button onClick={this.handleClick}>Search</button>
+          <button onClick={this.handleClear}>Clear</button>
+        </div>
         {
         !this.state.isClicked ?
           <ListBeers beers={this.state.beerList}/> :

@@ -1,13 +1,14 @@
 import React from 'react'; 
 
-import BeerCard from './BeerCard'
+//import BeerCard from './BeerCard';
+import MaterialUIBeerCard from './MaterialUIBeerCard'; 
 
 function ListBeers(props){
     return(
         <ol>
             {props.beers.map((beer, index) =>{
                 return (
-                    <BeerCard 
+                    <MaterialUIBeerCard 
                     key={index} 
                     index={index} 
                     yeast={beer.ingredients.yeast} 
@@ -24,7 +25,7 @@ function ListBeers(props){
                     hops={beer.ingredients.hops.map((hop, index) =>{
                         return hop.name.concat(' ').concat(', ');
                     })}/>
-                )
+               )
             })}
         </ol>
     )
